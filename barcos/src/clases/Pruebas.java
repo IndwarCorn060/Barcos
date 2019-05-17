@@ -27,7 +27,6 @@ public class Pruebas {
 		System.out.println(barco.getTipo().getTipoArmor());
 		
 		VentanaBarco examinar = new VentanaBarco(barco);
-		examinar.toString();
 		
 	}
 
