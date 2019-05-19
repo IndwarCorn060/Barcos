@@ -84,9 +84,9 @@ public class VentanaBarco {
 			der5.setHorizontalAlignment(JLabel.RIGHT);
 			der.add(der5);
 		JPanel centro = new JPanel();
-		ImageIcon imagen = new ImageIcon("./res/barcos/"+this.barco.getCodigo()+".png");
+		ImageIcon imagen = new ImageIcon("./res/barcosImg/"+this.barco.getCodigo()+".png");
 		if(imagen.getImageLoadStatus()==MediaTracker.ERRORED) {
-			centro.add(new JLabel(new ImageIcon("./res/default.png")));
+			centro.add(new JLabel(new ImageIcon("./res/barcosImg/default.png")));
 		}
 		else {
 			centro.add(new JLabel(imagen));

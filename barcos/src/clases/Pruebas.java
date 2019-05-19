@@ -9,11 +9,13 @@ public class Pruebas {
 		Barco barco = new Barco("155", "Ayanami", "Ayanami", Faccion.IJN, TipoBarco.DESTROYER, 1500, 56, 200, 450, 0, 130, 220, TipoEquipamiento.DDGUN, TipoEquipamiento.TORPEDO, TipoEquipamiento.AAGUN);
 
 		System.out.println(barco.toString());
+		System.out.println(barco.toStringFile());
 		
 		//cod, nombre, tipo, dmg, cd, hp, fp, aa, trp, avi, rld, eva, ammo
 		Equipamiento eq = new Equipamiento("33", "Steam Catapult", TipoEquipamiento.AUXILIAR, 0, 0f, 25, 0, 0, 0, 40, 0, 0, TipoAmmo.NORMAL);
 		
 		System.out.println(eq.toString());
+		System.out.println(eq.toStringFile());
 		
 		System.out.println(barco.equipar(0, eq));
 		System.out.println(barco.equipar(3, eq));
