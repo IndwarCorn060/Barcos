@@ -9,7 +9,7 @@ public class Barco implements Comparable<Barco>{
 	private TipoEquipamiento[] tipoSlot;//2 slots siempre seran para equipamiento auxiliar
 	private Equipamiento[] slot;
 	
-	//cod, nombre, clase, tipo, hp, fp, aa, trp, avi, rld, eva, tSlot1, tSlot2, Tslot3
+	//cod, nombre, clase, faccion, tipo, hp, fp, aa, trp, avi, rld, eva, tSlot1, tSlot2, Tslot3
 	public Barco(String cod, String nombre, String clase, Faccion faccion, TipoBarco tipo, 
 				int hp, int fp, int aa, int trp, int avi, int rld, int eva, 
 				TipoEquipamiento tSlot1, TipoEquipamiento tSlot2, TipoEquipamiento tSlot3) {
@@ -60,10 +60,14 @@ public class Barco implements Comparable<Barco>{
 		return f;
 	}
 	
-	public String toString() {
+	public String toStringFile() {
 		return this.codigo+"*"+this.nombre+"*"+this.clase+"*"+this.faccion+"*"+this.tipo+"*"+this.stats[0]+","+this.stats[1]+","+
 				this.stats[2]+","+this.stats[3]+","+this.stats[4]+","+this.stats[5]+","+this.stats[6]+"*"+
 				this.tipoSlot[0]+","+this.tipoSlot[1]+","+this.tipoSlot[2];
+	}
+	
+	public String toString(){
+		return this.codigo+": "+this.nombre;
 	}
 
 	public String getCodigo() {

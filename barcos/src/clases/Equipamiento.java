@@ -30,11 +30,15 @@ public class Equipamiento {
 		this.barco = null;
 	}
 	
-	public String toString() {
+	public String toStringFile() {
 		return this.cod+"*"+this.nombre+"*"+this.tipo+"*"+this.dmg+"*"+this.cd+"*"+this.stats[0]+","+this.stats[1]+","+
 				this.stats[2]+","+this.stats[3]+","+this.stats[4]+","+this.stats[5]+","+this.stats[6]+"*"+this.ammo;
 	}
-
+	
+	public String toString() {
+		return this.cod+": "+this.nombre+" "+((this.barco!=null)?"E":"");
+	}
+	
 	public String getCod() {
 		return cod;
 	}

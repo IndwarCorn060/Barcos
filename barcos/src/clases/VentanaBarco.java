@@ -39,10 +39,10 @@ public class VentanaBarco {
 		JPanel sur = new JPanel(new GridLayout(1,2));
 		JLabel sur1 = new JLabel("Armadura: "+this.barco.getTipo().getTipoArmor());
 		sur1.setHorizontalAlignment(JLabel.CENTER);
-		JLabel sur2 = new JLabel("Tipo: "+this.barco.getTipo().getNombre());
-		sur2.setHorizontalAlignment(JLabel.CENTER);
 		JLabel sur3 = new JLabel("Faccion: "+this.barco.getFaccion());
 		sur3.setHorizontalAlignment(JLabel.CENTER);
+		JLabel sur2 = new JLabel("Tipo: "+this.barco.getTipo().getNombre());
+		sur2.setHorizontalAlignment(JLabel.CENTER);
 		sur.setBorder(BorderFactory.createTitledBorder(""));
 		c.add(sur, BorderLayout.SOUTH);
 			sur.add(sur1);

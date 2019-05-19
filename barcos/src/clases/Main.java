@@ -19,7 +19,7 @@ public class Main {
 		
 		ventana.setContentPane(miVista);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setPreferredSize(new Dimension(900,600));
+		ventana.setPreferredSize(new Dimension(700,500));
 		ventana.setVisible(true);
 		ventana.pack();
 
