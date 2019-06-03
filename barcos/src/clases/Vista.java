@@ -23,13 +23,15 @@ public class Vista extends JPanel{
 	private JButton pB_pIbtnCod, pB_pIbtnNombre, pB_pIbtnClase, pB_pIbtnTipo, pB_pIbtnFaccion;
 	private JButton pB_pDbtnHP, pB_pDbtnFP, pB_pDbtnAA, pB_pDbtnTRP, pB_pDbtnAVI, pB_pDbtnRLD, pB_pDbtnEVA;
 	private JScrollPane pBarcos_centro;
-	private JList<Barco> pBarcos_centro_lstBarcos;
+	private JList<String> pBarcos_centro_lstBarcos;
+	private DefaultListModel<String> listaBarcos;
 	//poner modo de ordenacion
 	
 	//panel Equipar
 	private JPanel pEquipar;
 	private JComboBox<Barco> pEquipar_boxBarco;
-	private JComboBox<Equipamiento> pEquipar_boxBarcoEquipo, pEquipar_boxEquipamiento;
+	private JComboBox<String> pEquipar_boxBarcoEquipo;
+	private JComboBox<Equipamiento> pEquipar_boxEquipamiento;
 	private JLabel pEq_1etqtNombre, pEq_1etqtHP, pEq_1etqtFP, pEq_1etqtAA, pEq_1etqtTRP, pEq_1etqtAVI, pEq_1etqtRLD, pEq_1etqtEVA;
 	private JLabel pEq_2etqtNombre, pEq_2etqtHP, pEq_2etqtFP, pEq_2etqtAA, pEq_2etqtTRP, pEq_2etqtAVI, pEq_2etqtRLD, pEq_2etqtEVA;
 	private JLabel pEq_2etqtTipoSlot, pEq_2etqtDMG, pEq_2etqtCD, pEq_2etqtTipoAmmo;
@@ -67,7 +69,7 @@ public class Vista extends JPanel{
 	
 	private JPanel pC_p2_pEq, pC_p2_pDuplicar;
 	private JComboBox<Equipamiento> pC_p2_pEboxEq;
-	private JButton pC_p2_pDbtnDuplicar, pC_p3_pDbtnVolver;
+	private JButton pC_p2_pDbtnDuplicar, pC_p2_pDbtnEliminar, pC_p3_pDbtnVolver;
 	
 	
  	private void crearComponentesPanelPrincipal() {
@@ -108,12 +110,14 @@ public class Vista extends JPanel{
 		this.pBarcos_btnBack.setActionCommand("BackToPP");
 		this.pBarcos_btnEliminar = new JButton("Eliminar");
 		this.pBarcos_btnExaminar = new JButton("Examinar");
-		this.pBarcos_centro_lstBarcos = new JList<Barco>();
+		this.pBarcos_centro_lstBarcos = new JList<String>();
 		
 		this.pBarcos = new JPanel(new BorderLayout());
 		this.pBarcos_pSur = new JPanel();
 		this.pBarcos_centro = new JScrollPane(this.pBarcos_centro_lstBarcos);
 		this.pBarcos_centro.setPreferredSize(new Dimension(500,400));
+		this.listaBarcos = new DefaultListModel<String>();
+		this.pBarcos_centro_lstBarcos.setModel(this.listaBarcos);
 		this.pB_pIzq = new JPanel();
 		this.pB_pIzq.setLayout(new GridLayout(5,1));
 		this.pB_pIzq.setPreferredSize(new Dimension(90,this.pB_pIzq.getHeight()));
@@ -203,7 +207,7 @@ public class Vista extends JPanel{
 		
 		
 		this.pEquipar_boxBarco = new JComboBox<Barco>();
-		this.pEquipar_boxBarcoEquipo = new JComboBox<Equipamiento>();
+		this.pEquipar_boxBarcoEquipo = new JComboBox<String>();
 		this.pEquipar_boxEquipamiento = new JComboBox<Equipamiento>();
 		
 		this.pEquipar_p2_p2_ChckMostrarEquipados = new JCheckBox("Mostrar Equipados");
@@ -381,11 +385,12 @@ public class Vista extends JPanel{
 		this.pC_pDer.setLayout(new BoxLayout(this.pC_pDer, BoxLayout.PAGE_AXIS));
 		this.pC_p2 = new JPanel();
 		this.pC_p2.setLayout(new BoxLayout(this.pC_p2, BoxLayout.PAGE_AXIS));
-		this.pC_p2.setBorder(BorderFactory.createTitledBorder("Duplicar Equipamiento"));
+		this.pC_p2.setBorder(BorderFactory.createTitledBorder("Duplicar o Eliminar"));
 		this.pC_p2_pEq = new JPanel();
 		this.pC_p2_pEboxEq = new JComboBox<Equipamiento>();
 		this.pC_p2_pDuplicar  = new JPanel();
 		this.pC_p2_pDbtnDuplicar = new JButton("Duplicar");
+		this.pC_p2_pDbtnEliminar = new JButton("Eliminar");
 		this.pC_p3 = new JPanel();
 		this.pC_p3_pDbtnVolver = new JButton("Volver");
 		this.pC_p3_pDbtnVolver.setActionCommand("BackToPP");
@@ -513,6 +518,7 @@ public class Vista extends JPanel{
 						this.pC_p2_pEq.add(this.pC_p2_pEboxEq);
 					this.pC_p2.add(this.pC_p2_pDuplicar);
 						this.pC_p2_pDuplicar.add(this.pC_p2_pDbtnDuplicar);
+						this.pC_p2_pDuplicar.add(this.pC_p2_pDbtnEliminar);
 				this.pC_pDer.add(new JSeparator(SwingConstants.HORIZONTAL));
 				this.pC_pDer.add(this.pC_p3);
 					this.pC_p3.add(this.pC_p3_pDbtnVolver);
@@ -580,7 +586,7 @@ public class Vista extends JPanel{
 		this.pC_pE_pBbtnCrear.addActionListener(c);
 		this.pC_pE_pBbtnCancelar.addActionListener(c);
 		this.pC_p2_pDbtnDuplicar.addActionListener(c);
-		
+		this.pC_p2_pDbtnEliminar.addActionListener(c);
 	}
 
 	public JPanel getPprincipal() {
@@ -619,7 +625,7 @@ public class Vista extends JPanel{
 		return pBarcos_btnExaminar;
 	}
 
-	public JList<Barco> getpBarcos_centro_lstBarcos() {
+	public JList<String> getpBarcos_centro_lstBarcos() {
 		return pBarcos_centro_lstBarcos;
 	}
 	
@@ -635,7 +641,7 @@ public class Vista extends JPanel{
 		return pEquipar_boxBarco;
 	}
 	
-	public JComboBox<Equipamiento> getpEquipar_boxBarcoEquipo() {
+	public JComboBox<String> getpEquipar_boxBarcoEquipo() {
 		return pEquipar_boxBarcoEquipo;
 	}
 	
@@ -1044,6 +1050,16 @@ public class Vista extends JPanel{
 
 	public JCheckBox getpEquipar_p2_p2_ChckMostrarPosibles() {
 		return pEquipar_p2_p2_ChckMostrarPosibles;
+	}
+	
+
+	public DefaultListModel<String> getListaBarcos() {
+		return listaBarcos;
+	}
+	
+
+	public JButton getpC_p2_pDbtnEliminar() {
+		return pC_p2_pDbtnEliminar;
 	}
 
 	

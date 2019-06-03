@@ -6,7 +6,7 @@ public enum TipoBarco {
 	LIGHT_CRUISER("Crucero Ligero",TipoArmor.MEDIUM),
 	HEAVY_CRUISER("Crucero Pesado",TipoArmor.HEAVY),
 	AIRCRAFT_CARRIER("Portaaviones",TipoArmor.MEDIUM),
-	BATTELSHIP("Barco de Guerra",TipoArmor.HEAVY);
+	BATTLESHIP("Barco de Guerra",TipoArmor.HEAVY);
 
 	private String nombre;
 	private TipoArmor armor;

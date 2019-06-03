@@ -15,7 +15,7 @@ public class VentanaBarco {
 		JFrame ventana = new JFrame(this.barco.getCodigo()+" "+this.barco.getNombre());
 		Container cp = ventana.getContentPane();
 		this.montarVentana(cp);
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ventana.setPreferredSize(new Dimension(800,350));
 		ventana.setVisible(true);
 		ventana.pack();
@@ -52,18 +52,19 @@ public class VentanaBarco {
 		izq.setBorder(BorderFactory.createTitledBorder("Stats"));
 		izq.setPreferredSize(new Dimension(70,izq.getHeight()));
 		c.add(izq, BorderLayout.WEST);
-			izq.add(new JLabel("HP: "+this.barco.getStats()[0]));
-			izq.add(new JLabel("FP: "+this.barco.getStats()[1]));
-			izq.add(new JLabel("AA: "+this.barco.getStats()[2]));
-			izq.add(new JLabel("TRP: "+this.barco.getStats()[3]));
-			izq.add(new JLabel("AVI: "+this.barco.getStats()[4]));
-			izq.add(new JLabel("RLD: "+this.barco.getStats()[5]));
-			izq.add(new JLabel("EVA: "+this.barco.getStats()[6]));
+			izq.add(new JLabel("HP: "+(this.barco.getStats()[0]+this.barco.getStatAdicional()[0])));
+			izq.add(new JLabel("FP: "+(this.barco.getStats()[1]+this.barco.getStatAdicional()[1])));
+			izq.add(new JLabel("AA: "+(this.barco.getStats()[2]+this.barco.getStatAdicional()[2])));
+			izq.add(new JLabel("TRP: "+(this.barco.getStats()[3]+this.barco.getStatAdicional()[3])));
+			izq.add(new JLabel("AVI: "+(this.barco.getStats()[4]+this.barco.getStatAdicional()[4])));
+			izq.add(new JLabel("RLD: "+(this.barco.getStats()[5]+this.barco.getStatAdicional()[5])));
+			izq.add(new JLabel("EVA: "+(this.barco.getStats()[6]+this.barco.getStatAdicional()[6])));
 		JPanel der = new JPanel(new GridLayout(10,1));
 		der.setBorder(BorderFactory.createTitledBorder("Equipamiento"));
 		der.setPreferredSize(new Dimension(150,der.getHeight()));
 		c.add(der, BorderLayout.EAST);
 			der.add(new JLabel("Slot1: "));
+			
 			JLabel der1 = new JLabel((this.barco.getSlot()[0]!=null)?this.barco.getSlot()[0].getNombre():this.barco.getTipoSlot()[0]+"");
 			der1.setHorizontalAlignment(JLabel.RIGHT);
 			der.add(der1);

@@ -18,7 +18,7 @@ public class Main {
 		JFrame ventana = new JFrame("Barcos");
 		
 		ventana.setContentPane(miVista);
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.addWindowListener(c);
 		ventana.setPreferredSize(new Dimension(700,500));
 		ventana.setVisible(true);
 		ventana.pack();

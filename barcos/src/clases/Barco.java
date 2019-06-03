@@ -40,22 +40,37 @@ public class Barco implements Comparable<Barco>{
 		this.slot[4] = null;
 	}
 	
-	public boolean equipar(int nSlot, Equipamiento eq) {
-		boolean f = false;
-		if(eq.getBarco()==null&&this.tipoSlot[nSlot]==eq.getTipo()) {
-			this.slot[nSlot]=eq;
-			eq.setBarco(this);
-			f=true;
+	public boolean equipar(Equipamiento e, int slot) {
+		if(e.getTipo().equals(this.tipoSlot[slot])) {
+			this.slot[slot]=e;
+			e.setBarco(this.codigo);
+			return true;
 		}
-		return f;
+		else {
+			return false;
+		}
 	}
 	
-	public boolean desEquipar(int nSlot) {
-		boolean f = false;
-		if(this.slot[nSlot]!=null) {
-			this.slot[nSlot].setBarco(null);
-			this.slot[nSlot]=null;
-			f=true;
+	public boolean desEquipar(int slot) {
+		if(this.slot[slot]!=null) {
+			this.slot[slot].setBarco(null);
+			this.slot[slot]=null;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean desEquipar(Equipamiento e) {
+		boolean f=false;
+		int i = 0;
+		while(!f&&i<this.slot.length) {
+			if(this.slot[i].equals(e)) {
+				this.desEquipar(i);
+				f=true;
+			}
+			i++;
 		}
 		return f;
 	}
@@ -67,11 +82,19 @@ public class Barco implements Comparable<Barco>{
 	}
 	
 	public String toString(){
-		return this.codigo+": "+this.nombre;
+		return this.codigo+"---"+this.nombre;
 	}
 
 	public String getCodigo() {
 		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
+	public void setCodigo(int codigo) {
+		this.codigo = String.valueOf(codigo);
 	}
 
 	public String getNombre() {
@@ -130,6 +153,18 @@ public class Barco implements Comparable<Barco>{
 	public int compareTo(Barco otro) {
 		// TODO Auto-generated method stub
 		return this.codigo.compareTo(otro.codigo);
+	}
+	
+	public int[] getStatAdicional() {
+		int[] buff = {0,0,0,0,0,0,0};
+		for(int i=0; i<this.slot.length; i++) {
+			if(this.slot[i]!=null) {
+				for(int e=0; e<this.slot[i].getStats().length; e++) {
+					buff[i]+=this.slot[i].getStats()[e];
+				}
+			}
+		}
+		return buff;
 	}
 
 	

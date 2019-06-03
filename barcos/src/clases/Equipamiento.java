@@ -8,7 +8,7 @@ public class Equipamiento {
 	private float cd;//damage, cooldown
 	private int[] stats;
 	private TipoAmmo ammo;
-	private Barco barco;
+	private String cod_Barco;
 	
 	//cod, nombre, tipo, dmg, cd, hp, fp, aa, trp, avi, rld, eva, ammo
 	public Equipamiento(String cod, String nombre, TipoEquipamiento tipo, int dmg, float cd, int hp, int fp, int aa, 
@@ -27,7 +27,7 @@ public class Equipamiento {
 		this.stats[5] = rld;
 		this.stats[6] = eva;
 		this.ammo = ammo;
-		this.barco = null;
+		this.cod_Barco = null;
 	}
 	
 	public String toStringFile() {
@@ -36,11 +36,19 @@ public class Equipamiento {
 	}
 	
 	public String toString() {
-		return this.cod+": "+this.nombre+" "+((this.barco!=null)?"E":"");
+		return this.cod+"---"+this.nombre+((this.cod_Barco!=null)?"---E":"");
 	}
 	
 	public String getCod() {
 		return cod;
+	}
+	
+	public void setCod(int cod) {
+		this.cod = String.valueOf(cod);
+	}
+
+	public void setCod(String cod) {
+		this.cod = cod;
 	}
 
 	public String getNombre() {
@@ -67,12 +75,12 @@ public class Equipamiento {
 		return ammo;
 	}
 	
-	public Barco getBarco() {
-		return barco;
+	public String getBarco() {
+		return cod_Barco;
 	}
 
-	public void setBarco(Barco barco) {
-		this.barco = barco;
+	public void setBarco(String barco) {
+		this.cod_Barco = barco;
 	}
 	
 	
