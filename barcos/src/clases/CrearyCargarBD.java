@@ -25,9 +25,9 @@ public class CrearyCargarBD {
 			// Acceso a datos utilizando el objeto de conexión
 			
 			//CrearTablaBarcos(connection,nombreBD);
-			cargaTablaBarcos(connection,nombreBD);
+			//cargaTablaBarcos(connection,nombreBD);
 			//CrearTablaEquipamiento(connection,nombreBD);
-			//cargaTablaEquipamiento(connection,nombreBD);
+			cargaTablaEquipamiento(connection,nombreBD);
 			
 			
 		} 

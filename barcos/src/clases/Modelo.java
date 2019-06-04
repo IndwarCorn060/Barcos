@@ -248,6 +248,29 @@ public class Modelo {
 		return f;
 	}
 	
+	public boolean desEquipar(String cod_Barco, String cod_Equipamiento) {
+		boolean f=false;
+		int cont=0;
+		ResultSet rs = null;
+		try {
+			rs = this.stmt1.executeQuery("select nombre, slot1, slot2, slot3, slot4, slot5 from barco where cod_Barco="+cod_Barco);
+			rs.next();
+			while(!f&&cont<5) {
+				String aux = rs.getString("slot"+(cont+1));
+				if(aux!=null&&aux.equals(cod_Equipamiento)) {
+					f=true;
+				}
+				cont++;
+			}
+			String nombre = rs.getString("nombre");
+			this.desEquipar(nombre, cont);
+		} catch (SQLException e) {
+			this.printSQLException(e);
+		}
+		
+		return f;
+	}
+	
 	public boolean desEquiparTodo(String nombreBarco) {
 		boolean f;
 		String sentencia;
@@ -354,6 +377,28 @@ public class Modelo {
 			f=false;
 		}
 		return f;
+	}
+	
+	public ResultSet getDatosTabla() {
+		String sentencia = "select b.cod_Barco as cod_Barco, b.nombre as nombre_Barco, " + 
+				"e1.nombre as Equipo1, " + 
+				"e2.nombre as Equipo2, " + 
+				"e3.nombre as Equipo3, " + 
+				"e4.nombre as Equipo4, " + 
+				"e5.nombre as Equipo5 " + 
+				" from barco b " + 
+				" left join equipamiento e1 on (e1.cod_Equipamiento = slot1)" + 
+				" left join equipamiento e2 on (e2.cod_Equipamiento = slot2)" + 
+				" left join equipamiento e3 on (e3.cod_Equipamiento = slot3)" + 
+				" left join equipamiento e4 on (e4.cod_Equipamiento = slot4)" + 
+				" left join equipamiento e5 on (e5.cod_Equipamiento = slot5)";
+		ResultSet rs = null;
+		try {
+			rs = this.stmt1.executeQuery(sentencia);
+		} catch (SQLException e) {
+			this.printSQLException(e);
+		}
+		return rs;
 	}
 	
 }

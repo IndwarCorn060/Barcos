@@ -2,12 +2,15 @@ package clases;
 
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Controlador extends WindowAdapter implements ActionListener, ItemListener {
@@ -50,8 +53,31 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 		System.exit(0);
 	}
 	
-	//Panel barcos
+	//Panel Tabla
+	private void ponerTabla() {
+		ResultSet rs = this.m.getDatosTabla();
+		try {
+			ResultSetMetaData titulos = rs.getMetaData();
+			Vector<String> nombres = new Vector<String>();
+		    int nColumna = titulos.getColumnCount();
+		    for (int i=1; i<=nColumna; i++) {
+		        nombres.add(titulos.getColumnName(i));
+		    }
+		    Vector<Vector<Object>> datos = new Vector<Vector<Object>>();
+		    while (rs.next()) {
+		        Vector<Object> fila = new Vector<Object>();
+		        for (int i=1; i<=nColumna; i++) {
+		            fila.add(rs.getObject(i));
+		        }
+		        datos.add(fila);
+		    }
+		    this.v.getP1_tabla().setModel(new DefaultTableModel(datos, nombres));
+		} catch (SQLException e) {
+			this.m.printSQLException(e);
+		}
+	}
 	
+	//Panel Barco
 	private void llenarListaBarcos(String n) {
 		if(n.equals(ultimoBtnPulsado)) {
 			if(cambioBtnPulsado) cambioBtnPulsado=false;
@@ -111,7 +137,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 		}
 	}
 	
-	//panel Equipar
+	//Panel Equipar
 	private void actualizarBoxBarcos(int n) {
 		Barco[] barcos = this.m.getTodosLosBarcos();
 		this.v.getpEquipar_boxBarco().removeItemListener(this);
@@ -300,7 +326,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 		this.actualizarBoxEquipamiento();
 	}
 
-	//panel crear
+	//Panel Crear
 	
 	private void crearBarco() {
 		if(this.v.getpC_pB_pNtxtfNombre().getText().equals("")||this.v.getpC_pB_pCtxtfClase().getText().equals("")) {
@@ -379,10 +405,12 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 	
 	private void eliminarEquipamiento() {
 		Equipamiento e = (Equipamiento) this.v.getpC_p2_pEboxEq().getSelectedItem();
+		if(e.getBarco()!=null) {
+			this.m.desEquipar(e.getBarco(), e.getCod());
+		}
 		this.m.eliminarEquipamiento(e.getCod());
 	}
-	
-	
+		
 	private void limpiarCreacionBarco() {
 		this.v.getpC_pB_pNtxtfNombre().setText(null);
 		this.v.getpC_pB_pCtxtfClase().setText(null);
@@ -399,8 +427,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 		this.v.getpC_pB_pSboxSlot2().setSelectedIndex(0);
 		this.v.getpC_pB_pSboxSlot3().setSelectedIndex(0);
 	}
-	
-	
+		
 	private void limpiarCreacionEquipamiento() {
 		this.v.getpC_pE_pNtxtfNombre().setText(null);
 		this.v.getpC_pE_pTboxTipo().setSelectedIndex(0);
@@ -429,6 +456,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			System.out.println("Volver a pantalla principal");
 		}
 		else if(e.getSource()==this.v.getPp_btnGoP1()) {//ir a panel 1
+			this.ponerTabla();
 			this.v.getPprincipal().setVisible(false);
 			this.v.getP1().setVisible(true);
 			System.out.println("Ir a pantalla 1");

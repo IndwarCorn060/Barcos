@@ -15,7 +15,8 @@ public class Vista extends JPanel{
 	//panel 1
 	private JPanel p1;
 	private JButton p1_btnBack;
-	private JLabel hola;
+	private JTable p1_tabla;
+	private JScrollPane p1_pTabla;
 	
 	//panel Barcos
 	private JPanel pBarcos, pBarcos_pSur, pB_pIzq, pB_pDer;
@@ -74,10 +75,10 @@ public class Vista extends JPanel{
 	
  	private void crearComponentesPanelPrincipal() {
  		
-		this.pp_btnGoP1 = new JButton("Go Panel 1");
-		this.pp_btnGoPBarcos = new JButton("Go Panel Barcos");
-		this.pp_btnGoPEquipar = new JButton("Go Panel Equipar");
-		this.pp_btnGoPCreacion = new JButton("Go Panel Crear");
+		this.pp_btnGoP1 = new JButton("Vista General");
+		this.pp_btnGoPBarcos = new JButton("Panel Barcos");
+		this.pp_btnGoPEquipar = new JButton("Panel Equipar");
+		this.pp_btnGoPCreacion = new JButton("Panel Crear");
 		
 		this.pprincipal = new JPanel();
 	}
@@ -93,16 +94,16 @@ public class Vista extends JPanel{
 	private void crearComponentesPanel1(){
 		this.p1_btnBack = new JButton("Volver");
 		this.p1_btnBack.setActionCommand("BackToPP");
-		this.hola = new JLabel("hola");
-		
+		this.p1_tabla = new JTable(); 
+		this.p1_pTabla = new JScrollPane(this.p1_tabla);
 		this.p1 = new JPanel(new BorderLayout());
+		this.p1.setPreferredSize(new Dimension(600,420));
 	}
 	
 	private void montarComponentesPanel1() {
 		this.add(this.p1);
-			this.p1.add(hola, BorderLayout.NORTH);
-			this.p1.add(p1_btnBack, BorderLayout.NORTH);
-			this.p1.add(new JLabel(new ImageIcon("./res/moze.png")), BorderLayout.CENTER);
+			this.p1.add(this.p1_btnBack, BorderLayout.NORTH);
+			this.p1.add(this.p1_pTabla, BorderLayout.CENTER);
 	}
 	
 	private void crearComponentesPanelBarcos() {
@@ -1061,6 +1062,28 @@ public class Vista extends JPanel{
 	public JButton getpC_p2_pDbtnEliminar() {
 		return pC_p2_pDbtnEliminar;
 	}
+
+	
+	public JTable getP1_tabla() {
+		return p1_tabla;
+	}
+
+	public void setP1_tabla(JTable p1_tabla) {
+		this.p1_tabla = p1_tabla;
+		this.p1_tabla.setVisible(false);
+		this.p1_tabla.setVisible(true);
+	}
+
+	public JScrollPane getP1_pTabla() {
+		return p1_pTabla;
+	}
+
+	public void setP1_pTabla(JScrollPane p1_pTabla) {
+		this.p1_pTabla = p1_pTabla;
+	}
+	
+	
+	
 
 	
 	
