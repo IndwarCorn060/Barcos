@@ -196,7 +196,7 @@ public class Modelo {
 					+((soloPosibles&&soloNoEquipados)?"and ":" ")
 					+((soloNoEquipados)?"cod_Barco is null":" ")
 					+ " order by cod_Equipamiento";
-			System.out.println(sentencia);
+			//System.out.println(sentencia);
 			ResultSet st = stmt.executeQuery(sentencia);
 			st.last();
 			equipos = new Equipamiento[st.getRow()];
@@ -218,7 +218,7 @@ public class Modelo {
 		try {
 			this.stmt1.executeUpdate(sentencia1);
 			this.stmt2.executeUpdate(sentencia2);
-			System.out.println("El Equipo "+cod_Equipamiento+" ha sido equipado en el barco "+cod_Barco);
+			//System.out.println("El Equipo "+cod_Equipamiento+" ha sido equipado en el barco "+cod_Barco);
 			f=true;
 		} catch (SQLException e) {
 			this.printSQLException(e);
@@ -239,7 +239,7 @@ public class Modelo {
 			this.stmt1.executeUpdate(sentencia);
 			sentencia="UPDATE Equipamiento SET cod_Barco = NULL where cod_Equipamiento="+cod_Equipamiento;
 			this.stmt2.executeUpdate(sentencia);
-			System.out.println("El Equipo "+cod_Equipamiento+" ha sido desEquipado del barco "+nombreBarco);
+			//System.out.println("El Equipo "+cod_Equipamiento+" ha sido desEquipado del barco "+nombreBarco);
 			f=true;
 		}catch(SQLException e){
 			this.printSQLException(e);
@@ -274,20 +274,20 @@ public class Modelo {
 	public boolean desEquiparTodo(String nombreBarco) {
 		boolean f;
 		String sentencia;
-		System.out.println(nombreBarco);
+		//System.out.println(nombreBarco);
 		try {
 			for(int i=1; i<=5; i++) {
 				sentencia="Select slot"+i+" from barco where nombre='"+nombreBarco+"'";
-				System.out.println(sentencia);
+				//System.out.println(sentencia);
 				ResultSet rs = this.stmt1.executeQuery(sentencia);
 				rs.next();
 				String cod_Equipamiento = rs.getString(1);
 				if(cod_Equipamiento!=null) {
 					sentencia="UPDATE Barco SET slot"+i+" = NULL where nombre='"+nombreBarco+"'";
-					System.out.println(sentencia);
+					//System.out.println(sentencia);
 					this.stmt2.executeUpdate(sentencia);
 					sentencia="UPDATE Equipamiento SET cod_Barco = NULL where cod_Equipamiento="+cod_Equipamiento;
-					System.out.println(sentencia);
+					//System.out.println(sentencia);
 					this.stmt2.executeUpdate(sentencia);
 				}
 			}
@@ -311,7 +311,7 @@ public class Modelo {
 			}
 			cod++;
 			b.setCodigo(cod);
-			System.out.println(b.toStringFile());
+			//System.out.println(b.toStringFile());
 			sentencia = "insert into barco (cod_Barco, nombre, clase, faccion, tipo, hp, fp, aa, trp, "
 					+ "avi, rld, eva, tslot1, tslot2, Tslot3, tslot4, Tslot5) values ('"+
 					b.getCodigo() +"','"+
@@ -354,7 +354,7 @@ public class Modelo {
 			}
 			cod++;
 			e.setCod(cod);
-			System.out.println(e.toStringFile());
+			//System.out.println(e.toStringFile());
 			sentencia = "insert into EQUIPAMIENTO (cod_Equipamiento, nombre, tipo, dmg, cd, hp, fp,"
 					+ " aa, trp, avi, rld, eva, ammo) values ('"+
 					e.getCod() +"','"+

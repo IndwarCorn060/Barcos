@@ -296,7 +296,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 				this.m.equipar(b.getCodigo(), slot+1, e.getCod());
 			}
 			else {
-				System.out.println("cancelado");
+				//System.out.println("cancelado");
 			}
 		}
 		else {
@@ -320,10 +320,12 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 	}
 	
 	private void desEquiparTodo() {
-		Barco b = (Barco)this.v.getpEquipar_boxBarco().getSelectedItem();
-		this.m.desEquiparTodo(b.getNombre());
-		this.actualizarBoxBarcos(this.v.getpEquipar_boxBarco().getSelectedIndex());
-		this.actualizarBoxEquipamiento();
+		if(JOptionPane.showConfirmDialog(null, "Seguro que desea desequipar\ntodo de este barco?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Barco b = (Barco)this.v.getpEquipar_boxBarco().getSelectedItem();
+			this.m.desEquiparTodo(b.getNombre());
+			this.actualizarBoxBarcos(this.v.getpEquipar_boxBarco().getSelectedIndex());
+			this.actualizarBoxEquipamiento();
+		}
 	}
 
 	//Panel Crear
@@ -333,29 +335,32 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			JOptionPane.showMessageDialog(null,"Nombre o Clase vacias", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			try {
-				//cod, nombre, clase, faccion, tipo, hp, fp, aa, trp, avi, rld, eva, tSlot1, tSlot2, Tslot3
-				Barco b = new Barco("0", 
-									this.v.getpC_pB_pNtxtfNombre().getText(), 
-									this.v.getpC_pB_pCtxtfClase().getText(), 
-									Faccion.valueOf(this.v.getpC_pB_pFboxFaccion().getSelectedItem().toString()), 
-									TipoBarco.valueOf(this.v.getpC_pB_pTboxTipoBarco().getSelectedItem().toString()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfHP().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfFP().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfAA().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfTRP().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfAVI().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfRLD().getText()), 
-									Integer.parseInt(this.v.getpC_pB_pStxtfEVA().getText()), 
-									TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot1().getSelectedItem().toString()), 
-									TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot2().getSelectedItem().toString()), 
-									TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot3().getSelectedItem().toString()));
-				if(!this.m.anadirBarco(b)) {
-					JOptionPane.showMessageDialog(null,"Error al introducir el barco en la base de datos\nQuizas ese nombre ya este pillado", "Error", JOptionPane.ERROR_MESSAGE);
+			if(JOptionPane.showConfirmDialog(null, "Revise los datos\n¿desea crear este barco?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				try {
+					//cod, nombre, clase, faccion, tipo, hp, fp, aa, trp, avi, rld, eva, tSlot1, tSlot2, Tslot3
+					Barco b = new Barco("0", 
+										this.v.getpC_pB_pNtxtfNombre().getText(), 
+										this.v.getpC_pB_pCtxtfClase().getText(), 
+										Faccion.valueOf(this.v.getpC_pB_pFboxFaccion().getSelectedItem().toString()), 
+										TipoBarco.valueOf(this.v.getpC_pB_pTboxTipoBarco().getSelectedItem().toString()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfHP().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfFP().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfAA().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfTRP().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfAVI().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfRLD().getText()), 
+										Integer.parseInt(this.v.getpC_pB_pStxtfEVA().getText()), 
+										TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot1().getSelectedItem().toString()), 
+										TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot2().getSelectedItem().toString()), 
+										TipoEquipamiento.valueOf(this.v.getpC_pB_pSboxSlot3().getSelectedItem().toString()));
+					if(!this.m.anadirBarco(b)) {
+						JOptionPane.showMessageDialog(null,"Error al introducir el barco en la base de datos\nQuizas ese nombre ya este pillado", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					this.limpiarCreacionBarco();
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,"Error en los datos introducidos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,"Error en los datos introducidos", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -365,27 +370,31 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			JOptionPane.showMessageDialog(null,"El nombre esta vacio", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			try {
-				//cod, nombre, tipo, dmg, cd, hp, fp, aa, trp, avi, rld, eva, ammo
-				Equipamiento e = new Equipamiento("0",
-												this.v.getpC_pE_pNtxtfNombre().getText(), 
-												TipoEquipamiento.valueOf(this.v.getpC_pE_pTboxTipo().getSelectedItem().toString()), 
-												Integer.parseInt(this.v.getpC_pE_pDtxtfDmg().getText()), 
-												Float.parseFloat(this.v.getpC_pE_pDtxtfCd().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfHP().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfFP().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfAA().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfTRP().getText()),
-												Integer.parseInt(this.v.getpC_pE_pStxtfAVI().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfRLD().getText()), 
-												Integer.parseInt(this.v.getpC_pE_pStxtfEVA().getText()), 
-												TipoAmmo.valueOf(this.v.getpC_pE_pAboxAmmo().getSelectedItem().toString()));
-				if(!this.m.anadirEquipamiento(e)) {
-					JOptionPane.showMessageDialog(null,"Error al introducir el barco en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+			if(JOptionPane.showConfirmDialog(null, "Revise los datos\n¿desea crear este equipo?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				try {
+					//cod, nombre, tipo, dmg, cd, hp, fp, aa, trp, avi, rld, eva, ammo
+					Equipamiento e = new Equipamiento("0",
+													this.v.getpC_pE_pNtxtfNombre().getText(), 
+													TipoEquipamiento.valueOf(this.v.getpC_pE_pTboxTipo().getSelectedItem().toString()), 
+													Integer.parseInt(this.v.getpC_pE_pDtxtfDmg().getText()), 
+													Float.parseFloat(this.v.getpC_pE_pDtxtfCd().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfHP().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfFP().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfAA().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfTRP().getText()),
+													Integer.parseInt(this.v.getpC_pE_pStxtfAVI().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfRLD().getText()), 
+													Integer.parseInt(this.v.getpC_pE_pStxtfEVA().getText()), 
+													TipoAmmo.valueOf(this.v.getpC_pE_pAboxAmmo().getSelectedItem().toString()));
+					if(!this.m.anadirEquipamiento(e)) {
+						JOptionPane.showMessageDialog(null,"Error al introducir el barco en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					this.limpiarCreacionEquipamiento();
+					this.cargarBoxEquipamiento();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null,"Error en los datos introducidos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				JOptionPane.showMessageDialog(null,"Error en los datos introducidos", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -399,16 +408,22 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 	}
 	
 	private void duplicarEquipamiento() {
-		Equipamiento e = (Equipamiento) this.v.getpC_p2_pEboxEq().getSelectedItem();
-		this.m.anadirEquipamiento(e);
+		if(JOptionPane.showConfirmDialog(null, "Seguro que desea duplicar\neste equipamiento?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Equipamiento e = (Equipamiento) this.v.getpC_p2_pEboxEq().getSelectedItem();
+			this.m.anadirEquipamiento(e);
+			this.cargarBoxEquipamiento();
+		}
 	}
 	
 	private void eliminarEquipamiento() {
-		Equipamiento e = (Equipamiento) this.v.getpC_p2_pEboxEq().getSelectedItem();
-		if(e.getBarco()!=null) {
-			this.m.desEquipar(e.getBarco(), e.getCod());
+		if(JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar\neste equipamiento?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Equipamiento e = (Equipamiento) this.v.getpC_p2_pEboxEq().getSelectedItem();
+			if(e.getBarco()!=null) {
+				this.m.desEquipar(e.getBarco(), e.getCod());
+			}
+			this.m.eliminarEquipamiento(e.getCod());
+			this.cargarBoxEquipamiento();
 		}
-		this.m.eliminarEquipamiento(e.getCod());
 	}
 		
 	private void limpiarCreacionBarco() {
@@ -453,13 +468,13 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			this.v.getpEquipar().setVisible(false);
 			this.v.getpCrear().setVisible(false);
 			this.v.getPprincipal().setVisible(true);
-			System.out.println("Volver a pantalla principal");
+			//System.out.println("Volver a pantalla principal");
 		}
 		else if(e.getSource()==this.v.getPp_btnGoP1()) {//ir a panel 1
 			this.ponerTabla();
 			this.v.getPprincipal().setVisible(false);
 			this.v.getP1().setVisible(true);
-			System.out.println("Ir a pantalla 1");
+			//System.out.println("Ir a pantalla 1");
 		}
 		else if(e.getSource()==this.v.getPp_btnGoPBarcos()) {//ir a panel barcos
 			this.v.getPprincipal().setVisible(false);
@@ -467,7 +482,7 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			this.ultimoBtnPulsado="Codigo";
 			this.cambioBtnPulsado=true;
 			this.llenarListaBarcos(this.ultimoBtnPulsado);
-			System.out.println("Ir a pantalla Barcos");
+			//System.out.println("Ir a pantalla Barcos");
 		}
 		else if(e.getSource()==this.v.getPp_btnGoPEquipar()) {//ir a panel equipar
 			this.v.getPprincipal().setVisible(false);
@@ -476,13 +491,13 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 			this.actualizarPanelEquiparBarco();
 			this.actualizarBoxEquipamiento();
 			this.actualizarPanelEquiparEquipamiento();
-			System.out.println("Ir a pantalla Equipar");
+			//System.out.println("Ir a pantalla Equipar");
 		}
 		else if(e.getSource()==this.v.getPp_btnGoPCreacion()) {//ir a panel crear
 			this.v.getPprincipal().setVisible(false);
 			this.v.getpCrear().setVisible(true);
 			this.cargarBoxEquipamiento();
-			System.out.println("Ir a pantalla Creacion");
+			//System.out.println("Ir a pantalla Creacion");
 		}
 		else if(e.getActionCommand().equals("sort")) {//botones de ordenacion
 			JButton aux = (JButton)e.getSource();
@@ -513,26 +528,21 @@ public class Controlador extends WindowAdapter implements ActionListener, ItemLi
 		}
 		else if(e.getSource()==this.v.getpC_pBbtnCrear()) {//boton crear barco
 			this.crearBarco();
-			this.limpiarCreacionBarco();
 		}
 		else if(e.getSource()==this.v.getpC_pBbtnCancelar()) {//boton cancelar barco
 			this.limpiarCreacionBarco();
 		}
 		else if(e.getSource()==this.v.getpC_pE_pBbtnCrear()) {//boton crear equipamiento
 			this.crearEquipamiento();
-			this.limpiarCreacionEquipamiento();
-			this.cargarBoxEquipamiento();
 		}
 		else if(e.getSource()==this.v.getpC_pE_pBbtnCancelar()) {//boton cancelar equipamiento
 			this.limpiarCreacionEquipamiento();
 		}
 		else if(e.getSource()==this.v.getpC_p2_pDbtnDuplicar()) {//boton duplicar equipamiento
 			this.duplicarEquipamiento();
-			this.cargarBoxEquipamiento();
 		}
 		else if(e.getSource()==this.v.getpC_p2_pDbtnEliminar()) {//boton eliminar equipamiento
 			this.eliminarEquipamiento();
-			this.cargarBoxEquipamiento();
 		}
 		
 	}

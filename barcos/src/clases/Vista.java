@@ -9,10 +9,12 @@ public class Vista extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	//panel Principal
-	private JPanel pprincipal;
+	private JPanel pprincipal, pp_pNorte, pp_pPortada;
 	private JButton pp_btnGoP1, pp_btnGoPBarcos, pp_btnGoPEquipar, pp_btnGoPCreacion;
+	private ImageIcon image;
+	private JLabel pp_pp_etqtportda, pp_etqutTitulo;
 	
-	//panel 1
+	//panel tabla
 	private JPanel p1;
 	private JButton p1_btnBack;
 	private JTable p1_tabla;
@@ -75,20 +77,40 @@ public class Vista extends JPanel{
 	
  	private void crearComponentesPanelPrincipal() {
  		
-		this.pp_btnGoP1 = new JButton("Vista General");
-		this.pp_btnGoPBarcos = new JButton("Panel Barcos");
-		this.pp_btnGoPEquipar = new JButton("Panel Equipar");
-		this.pp_btnGoPCreacion = new JButton("Panel Crear");
+		this.pp_btnGoP1 = new JButton();
+		this.pp_btnGoP1.setPreferredSize(new Dimension(144,22));
+		this.pp_btnGoP1.setIcon(new ImageIcon("./res/datos.png")); 
+		this.pp_btnGoPBarcos = new JButton();
+		this.pp_btnGoPBarcos.setPreferredSize(new Dimension(166,22));
+		this.pp_btnGoPBarcos.setIcon(new ImageIcon("./res/barcos.png")); 
+		this.pp_btnGoPEquipar = new JButton();
+		this.pp_btnGoPEquipar.setPreferredSize(new Dimension(186,22));
+		this.pp_btnGoPEquipar.setIcon(new ImageIcon("./res/equipar.png")); 
+		this.pp_btnGoPCreacion = new JButton();
+		this.pp_btnGoPCreacion.setPreferredSize(new Dimension(140,22));
+		this.pp_btnGoPCreacion.setIcon(new ImageIcon("./res/crear.png")); 
 		
 		this.pprincipal = new JPanel();
+		this.pprincipal.setLayout(new BoxLayout(this.pprincipal, BoxLayout.PAGE_AXIS));
+		this.pp_pNorte = new JPanel();
+		this.pp_pPortada = new JPanel();
+		
+		this.image = new ImageIcon("./res/portada.png");
+		this.pp_pp_etqtportda = new JLabel(this.image);
+		
+		this.pp_etqutTitulo = new JLabel("Battleship 'Roma' in 1940");
 	}
 	
 	private void montarComponentesPanelPrincipal() {
 		this.add(this.pprincipal);
-			this.pprincipal.add(this.pp_btnGoP1);
-			this.pprincipal.add(this.pp_btnGoPBarcos);
-			this.pprincipal.add(this.pp_btnGoPEquipar);
-			this.pprincipal.add(this.pp_btnGoPCreacion);
+			this.pprincipal.add(this.pp_pNorte);
+				this.pp_pNorte.add(this.pp_btnGoP1);
+				this.pp_pNorte.add(this.pp_btnGoPBarcos);
+				this.pp_pNorte.add(this.pp_btnGoPEquipar);
+				this.pp_pNorte.add(this.pp_btnGoPCreacion);
+			this.pprincipal.add(this.pp_pPortada);
+				this.pp_pPortada.add(this.pp_pp_etqtportda);
+			this.pprincipal.add(this.pp_etqutTitulo);
 	}
 	
 	private void crearComponentesPanel1(){
